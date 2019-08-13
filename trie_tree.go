@@ -11,6 +11,7 @@ type Node struct {
 	isPathEnd  bool
 	Character  rune
 	Children   map[rune]*Node
+	isDelFlag    bool
 }
 
 // NewTrie 新建一棵Trie
@@ -41,6 +42,27 @@ func (tree *Trie) add(word string) {
 		}
 		if position == len(runes)-1 {
 			current.isPathEnd = true
+			current.isDelFlag = false
+		}
+	}
+}
+
+func (tree *Trie) Remove(words ...string) {
+	for _, word := range words {
+		tree.remove(word)
+	}
+}
+
+func (tree *Trie) remove(word string) {
+	var current = tree.Root
+	var runes = []rune(word)
+	for position := 0; position < len(runes); position++ {
+		r := runes[position]
+		if next, ok := current.Children[r]; ok {
+			current = next
+		}
+		if position == len(runes) - 1 {
+			current.isDelFlag = true
 		}
 	}
 }
@@ -135,7 +157,7 @@ func (tree *Trie) Validate(text string) (bool, string) {
 			continue
 		}
 
-		if current.IsPathEnd() && left <= position {
+		if current.IsPathEnd() && left <= position && !current.IsDel() {
 			return false, string(runes[left : position+1])
 		}
 
@@ -235,4 +257,8 @@ func (node *Node) IsRootNode() bool {
 // IsPathEnd 判断是否为某个路径的结束
 func (node *Node) IsPathEnd() bool {
 	return node.isPathEnd
+}
+
+func (node *Node) IsDel() bool {
+	return node.isDelFlag
 }
