@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/importcjj/sensitive.svg?branch=master)](https://travis-ci.org/importcjj/sensitive)
 [![GoDoc](https://godoc.org/github.com/importcjj/sensitive?status.svg)](https://godoc.org/github.com/importcjj/sensitive)
 
+@添加了敏感词删除能力
 敏感词查找,验证,过滤和替换 🤓 FindAll, Validate, Filter and Replace words. 
 
 #
